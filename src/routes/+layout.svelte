@@ -1,5 +1,5 @@
 <script>
-	import '@picocss/pico/css/pico.classless.min.css';
+	import '@picocss/pico/css/pico.min.css';
 </script>
 
 <header>
@@ -24,8 +24,7 @@
 		margin: 0 auto;
 	}
 
-	:global(textarea) {
-		resize: none;
-		height: 10rem;
+	main {
+		padding-bottom: 20rem;
 	}
 </style>

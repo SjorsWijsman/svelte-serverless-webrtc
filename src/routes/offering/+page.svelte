@@ -1,5 +1,7 @@
 <script>
 	import ChatBox from '$lib/components/ChatBox.svelte';
+	import InputBox from '$lib/components/InputBox.svelte';
+	import OutputBox from '$lib/components/OutputBox.svelte';
 	import { createPeerConnection } from '$lib/createPeerConnection';
 	import { peerConnection, dataChannel } from '$lib/store';
 
@@ -55,7 +57,7 @@
 	<article>
 		<h2>Step 2</h2>
 		<p>Copy the offer below and send it to your peer</p>
-		<textarea readonly bind:value={offer} />
+		<OutputBox bind:value={offer} />
 		<button disabled={offerSent} on:click={() => (offerSent = true)}>Offer Sent</button>
 	</article>
 {/if}
@@ -64,9 +66,9 @@
 	<article>
 		<h2>Step 3</h2>
 		<p>Please wait for your peer to return the answer and paste it below</p>
-		<textarea
-			placeholder="Paste answer from peer here"
+		<InputBox
 			bind:value={answer}
+			placeholder={'Paste answer from peer here'}
 			readonly={answerReceived}
 		/>
 		<button on:click={() => receiveAnswer()} disabled={answerReceived}>Answer Pasted</button>

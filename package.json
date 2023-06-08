@@ -23,6 +23,6 @@
 	"type": "module",
 	"dependencies": {
 		"@picocss/pico": "^2.0.0-alpha1",
-		"svelte-qrcode": "^1.0.0"
+		"qrcode": "^1.5.3"
 	}
 }

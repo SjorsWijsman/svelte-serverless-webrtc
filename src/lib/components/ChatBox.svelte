@@ -1,11 +1,12 @@
 <script>
 	import { dataChannel } from '$lib/store';
 
-	let value,
+	let el,
+		value,
 		chatHistory = [],
 		disabled = true;
 
-	export function sendMessage() {
+	function sendMessage() {
 		chatHistory = [...chatHistory, `${value}`];
 		$dataChannel.send(value);
 		value = '';
@@ -15,15 +16,20 @@
 		chatHistory = [...chatHistory, `${event.data}`];
 	}
 
+	function enableChat() {
+		disabled = false;
+		el.scrollIntoView({ behavior: 'smooth' });
+	}
+
 	dataChannel.subscribe((channel) => {
 		if (!channel) return;
 		console.log(channel);
-		channel.onopen = () => (disabled = false);
+		channel.onopen = () => enableChat();
 		channel.onmessage = (event) => receiveMessage(event);
 	});
 </script>
 
-<article>
+<article bind:this={el}>
 	<h2>Chat</h2>
 	<div>
 		{#each chatHistory as message}
