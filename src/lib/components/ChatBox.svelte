@@ -44,5 +44,6 @@
 		border-radius: var(--pico-border-radius);
 		background-color: var(--pico-form-element-background-color);
 		margin-bottom: 1rem;
+		overflow-y: auto;
 	}
 </style>
