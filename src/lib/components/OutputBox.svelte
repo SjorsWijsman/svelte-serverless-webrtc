@@ -19,7 +19,6 @@
 	textarea {
 		display: block;
 		resize: none;
-		height: 100%;
-		aspect-ratio: 1 / 1;
+		height: 10rem;
 	}
 </style>

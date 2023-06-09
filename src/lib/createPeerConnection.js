@@ -1,4 +1,4 @@
-export function createPeerConnection(lasticecandidate) {
+export function createPeerConnection(callback) {
 	let peerConnection;
 
 	const configuration = { iceServers: [{ urls: 'stun:stun.stunprotocol.org' }] };
@@ -10,20 +10,18 @@ export function createPeerConnection(lasticecandidate) {
 		console.error(err);
 	}
 
-	peerConnection.onicecandidate = handleicecandidate(lasticecandidate);
+	peerConnection.onicecandidate = handleicecandidate(callback);
 	peerConnection.onconnectionstatechange = handleconnectionstatechange;
 	peerConnection.oniceconnectionstatechange = handleiceconnectionstatechange;
 
 	return peerConnection;
 }
 
-function handleicecandidate(lasticecandidate) {
-	return function (event) {
-		if (event.candidate != null) {
-			console.log('new ice candidate');
-		} else {
-			console.log('all ice candidates');
-			lasticecandidate();
+function handleicecandidate(callback) {
+	return (event) => {
+		// Perform callback function when all ICE candidates have been gathered
+		if (event.candidate === null) {
+			callback();
 		}
 	};
 }

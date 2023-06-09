@@ -9,7 +9,9 @@
 
 	async function receiveOffer() {
 		// Start RTC peer connection
-		$peerConnection = createPeerConnection(lasticecandidate);
+		$peerConnection = createPeerConnection(() => {
+			answer = JSON.stringify($peerConnection.localDescription);
+		});
 
 		// Setup data channel responses
 		$peerConnection.ondatachannel = (event) => {
@@ -22,10 +24,6 @@
 
 		await $peerConnection.setLocalDescription(createdAnswer);
 		answer = JSON.stringify(createdAnswer);
-	}
-
-	function lasticecandidate() {
-		answer = JSON.stringify($peerConnection.localDescription);
 	}
 </script>
 

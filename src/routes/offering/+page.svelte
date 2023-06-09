@@ -14,7 +14,10 @@
 	async function createOffer() {
 		creatingOffer = true;
 		// Start RTC peer connection
-		$peerConnection = createPeerConnection(lasticecandidate);
+		$peerConnection = createPeerConnection(() => {
+			offer = JSON.stringify($peerConnection.localDescription);
+			creatingOffer = false;
+		});
 
 		// Setup data channel
 		$dataChannel = $peerConnection.createDataChannel('chat');
@@ -22,11 +25,6 @@
 		// Create offer
 		const createdOffer = await $peerConnection.createOffer();
 		await $peerConnection.setLocalDescription(createdOffer);
-	}
-
-	function lasticecandidate() {
-		offer = JSON.stringify($peerConnection.localDescription);
-		creatingOffer = false;
 	}
 
 	async function receiveAnswer() {
