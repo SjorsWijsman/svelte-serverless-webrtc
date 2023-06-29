@@ -15,7 +15,7 @@
 	onMount(() => {
 		if (QrScanner.hasCamera()) {
 			qrScanner = new QrScanner(videoElem, (result) => {
-				value = result.data;
+				value = result;
 				console.log(result);
 			});
 			qrScanner.start();
