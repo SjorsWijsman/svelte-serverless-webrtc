@@ -9,8 +9,7 @@
 	let videoElem;
 	let scanning = false;
 
-	function scanQrCode() {
-		scanning = true;
+	onMount(() => {
 		const qrScanner = new QrScanner(
 			videoElem,
 			(result) => console.log('decoded qr code:', result),
@@ -18,20 +17,28 @@
 				/* your options or returnDetailedScanResult: true if you're not specifying any other options */
 			}
 		);
+	});
+
+	function scanQrCode() {
+		scanning = true;
 
 		qrScanner
 			.start()
 			.then((result) => {
 				value = result;
+				scanning = false;
 			})
-			.catch((error) => window.alert(error || 'No QR code found.'));
-
-		scanning = false;
+			.catch((error) => {
+				window.alert(error || 'No QR code found.');
+				scanning = false;
+			});
 	}
 </script>
 
 {#if QrScanner.hasCamera()}
-	<button on:click={() => scanQrCode()} class="secondary"> Scan QR Code </button>
+	<button on:click={() => scanQrCode()} class="secondary" disabled={scanning}>
+		Scan QR Code
+	</button>
 {/if}
 <!-- svelte-ignore a11y-media-has-caption -->
 <video src="" bind:this={videoElem} class:scanning />
