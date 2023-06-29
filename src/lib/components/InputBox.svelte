@@ -7,7 +7,6 @@
 	export let value = '';
 
 	let videoElem;
-	let scanning = false;
 
 	let qrScanner;
 
@@ -18,28 +17,24 @@
 	});
 
 	function scanQrCode() {
-		scanning = true;
-
 		qrScanner
 			.start()
 			.then((result) => {
 				value = result;
-				scanning = false;
+				console.log(result);
 			})
 			.catch((error) => {
 				value = error || 'No QR code found.';
-				scanning = false;
+				console.error(error);
 			});
 	}
 </script>
 
 {#if QrScanner.hasCamera()}
-	<button on:click={() => scanQrCode()} class="secondary" disabled={scanning}>
-		Scan QR Code
-	</button>
+	<button on:click={() => scanQrCode()} class="secondary"> Scan QR Code </button>
 {/if}
 <!-- svelte-ignore a11y-media-has-caption -->
-<video src="" bind:this={videoElem} class:scanning />
+<video src="" bind:this={videoElem} />
 <textarea {readonly} {placeholder} bind:value />
 
 <style>
@@ -54,14 +49,8 @@
 	}
 
 	video {
-		max-width: 100%;
-		margin: 0;
-		border-radius: 5px;
-		display: none;
-	}
-
-	video.scanning {
-		display: inline-block;
 		margin: 1rem 0;
+		max-width: 100%;
+		border-radius: 5px;
 	}
 </style>
