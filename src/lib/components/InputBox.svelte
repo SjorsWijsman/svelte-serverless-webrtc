@@ -17,7 +17,7 @@
 			qrScanner = new QrScanner(
 				videoElem,
 				(result) => {
-					value = result;
+					value = result.data;
 					console.log(result);
 				},
 				{
