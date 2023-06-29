@@ -10,31 +10,23 @@
 
 	let qrScanner;
 
-	onMount(() => {
-		qrScanner = new QrScanner(videoElem, (result) => console.log('decoded qr code:', result), {
-			/* your options or returnDetailedScanResult: true if you're not specifying any other options */
-		});
-	});
+	let resultMessage;
 
-	function scanQrCode() {
-		qrScanner
-			.start()
-			.then((result) => {
-				value = result;
+	onMount(() => {
+		if (QrScanner.hasCamera()) {
+			qrScanner = new QrScanner(videoElem, (result) => {
+				value = result.data;
 				console.log(result);
-			})
-			.catch((error) => {
-				value = error || 'No QR code found.';
-				console.error(error);
 			});
-	}
+			qrScanner.start();
+		}
+	});
 </script>
 
 {#if QrScanner.hasCamera()}
-	<button on:click={() => scanQrCode()} class="secondary"> Scan QR Code </button>
+	<!-- svelte-ignore a11y-media-has-caption -->
+	<video src="" bind:this={videoElem} />
 {/if}
-<!-- svelte-ignore a11y-media-has-caption -->
-<video src="" bind:this={videoElem} />
 <textarea {readonly} {placeholder} bind:value />
 
 <style>
@@ -44,13 +36,11 @@
 		height: 10rem;
 	}
 
-	button {
-		margin-bottom: 1rem;
-	}
-
 	video {
 		margin: 1rem 0;
-		max-width: 100%;
+		width: 100%;
+		border: 1px solid var(--pico-form-element-border-color);
 		border-radius: 5px;
+		background-color: var(--pico-form-element-background-color);
 	}
 </style>
