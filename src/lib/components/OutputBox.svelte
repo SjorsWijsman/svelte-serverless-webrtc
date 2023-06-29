@@ -16,6 +16,10 @@
 {/if}
 
 <style>
+	button {
+		margin-bottom: 1rem;
+	}
+
 	textarea {
 		display: block;
 		resize: none;
