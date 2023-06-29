@@ -27,7 +27,7 @@
 				scanning = false;
 			})
 			.catch((error) => {
-				window.alert(error || 'No QR code found.');
+				value = error || 'No QR code found.';
 				scanning = false;
 			});
 	}
@@ -55,12 +55,13 @@
 
 	video {
 		max-width: 100%;
-		margin: 1rem 0;
+		margin: 0;
 		border-radius: 5px;
 		display: none;
 	}
 
 	video.scanning {
 		display: inline-block;
+		margin: 1rem 0;
 	}
 </style>
