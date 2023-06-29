@@ -14,10 +14,17 @@
 
 	onMount(() => {
 		if (QrScanner.hasCamera()) {
-			qrScanner = new QrScanner(videoElem, (result) => {
-				value = result;
-				console.log(result);
-			});
+			qrScanner = new QrScanner(
+				videoElem,
+				(result) => {
+					value = result;
+					console.log(result);
+				},
+				{
+					returnDetailedScanResult: true,
+					highlightScanRegion: true
+				}
+			);
 			qrScanner.start();
 		}
 	});
